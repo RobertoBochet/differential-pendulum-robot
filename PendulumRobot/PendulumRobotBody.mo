@@ -13,7 +13,7 @@ model PendulumRobotBody
     "= true, if animation of wheel set shall be enabled";
 
   parameter Modelica.SIunits.Radius wheelRadius "Radius of one wheel";
-  parameter Modelica.SIunits.Distance wheelThickness=0.01 "Thickness of one wheel";
+  parameter Modelica.SIunits.Thickness wheelThickness=0.01 "Thickness of one wheel";
   parameter Modelica.SIunits.Distance wheelDistance "Distance between the two wheels";
   parameter Modelica.SIunits.Diameter driveShaftDiameter = 0.1 "Drive shaft diameter";
   parameter Modelica.SIunits.Diameter pendulumDiameter = 0.2 "Pendulum diameter";
@@ -49,7 +49,7 @@ model PendulumRobotBody
     annotation (Placement(transformation(extent={{90,90},{110,110}})));
   Modelica.Mechanics.Rotational.Interfaces.Flange_b support
     "Support of 1D axes" annotation (Placement(visible = true,transformation(extent = {{-10, 16}, {10, 36}}, rotation = 0), iconTransformation(extent = {{-10, 70}, {10, 90}}, rotation = 0)));
-  PendulumRobot.RollingWheelSetTillingMass wheelSetJoint(animation = animation, stateSelect = stateSelect, theta1(displayUnit = "rad"), theta2(displayUnit = "rad"), wheelDistance = wheelDistance, wheelRadius = wheelRadius, wheelThickness = wheelThickness) annotation(
+  PendulumRobot.RollingWheelSetTiltingMass wheelSetJoint(animation = animation, stateSelect = stateSelect, theta1(displayUnit = "rad"), theta2(displayUnit = "rad"), wheelDistance = wheelDistance, wheelRadius = wheelRadius, wheelThickness = wheelThickness) annotation(
     Placement(visible = true, transformation(origin = {0, 0}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   Modelica.Mechanics.MultiBody.Parts.BodyCylinder pendulum(diameter = pendulumDiameter, r = {0, 0, pendulumLength}) annotation(
     Placement(visible = true, transformation(origin = {0, 76}, extent = {{-10, -10}, {10, 10}}, rotation = 90)));

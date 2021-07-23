@@ -13,7 +13,7 @@ model PendulumRobotBodyReal
     "= true, if animation of wheel set shall be enabled";
 
   parameter Modelica.SIunits.Radius wheelRadius "Radius of one wheel";
-  parameter Modelica.SIunits.Distance wheelThickness=0.01 "Thickness of one wheel";
+  parameter Modelica.SIunits.Thickness wheelThickness=0.01 "Thickness of one wheel";
   parameter Modelica.SIunits.Distance wheelDistance "Distance between the two wheels";
   parameter Modelica.SIunits.Diameter driveShaftDiameter = 0.1 "Drive shaft diameter";
   parameter Modelica.SIunits.Diameter pendulumDiameter = 0.2 "Pendulum diameter";

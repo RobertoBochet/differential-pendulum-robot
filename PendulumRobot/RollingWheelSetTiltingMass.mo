@@ -1,6 +1,6 @@
 within PendulumRobot;
 
-model RollingWheelSetTillingMass
+model RollingWheelSetTiltingMass
   "Ideal rolling wheel set consisting of two ideal rolling wheels connected together by an axis"
   Modelica.Mechanics.MultiBody.Interfaces.Frame_a frameMiddle
     "Frame fixed in middle of axis connecting both wheels (y-axis: along wheel axis, z-axis: upwards)"
@@ -13,7 +13,7 @@ model RollingWheelSetTillingMass
     "= true, if animation of wheel set shall be enabled";
 
   parameter Modelica.SIunits.Radius wheelRadius "Radius of one wheel";
-  parameter Modelica.SIunits.Distance wheelThickness=0.01 "Thickness of one wheel";
+  parameter Modelica.SIunits.Thickness wheelThickness=0.01 "Thickness of one wheel";
   parameter Modelica.SIunits.Distance wheelDistance "Distance between the two wheels";
   parameter StateSelect stateSelect=StateSelect.prefer
     "Priority to use the generalized coordinates as states";
@@ -119,4 +119,4 @@ To work properly, the gravity acceleration vector g of the world must point in t
 <span style=\"font-family:'Courier New',courier; color:#0000ff;\">inner</span> <span style=\"font-family:'Courier New',courier; color:#ff0000;\">Modelica.Mechanics.MultiBody.World</span> world(n={0,0,-1});
 </pre></blockquote>
 </html>"));
-end RollingWheelSetTillingMass;
+end RollingWheelSetTiltingMass;
