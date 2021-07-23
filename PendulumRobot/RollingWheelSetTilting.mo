@@ -34,9 +34,6 @@ model RollingWheelSetTilting
   Modelica.Mechanics.MultiBody.Interfaces.Frame_b frame2
   "Frame fixed in center point of right wheel (y-axis: along wheel axis, z-Axis: upwards)"
     annotation (Placement(transformation(extent={{64,16},{96,-16}})));
-  Modelica.Mechanics.MultiBody.Parts.Fixed fixed(                  animation= false,r={-10,0,
-        wheelRadius})
-                      annotation (Placement(visible = true, transformation(origin = {0, -90}, extent = {{-10, -10}, {10, 10}}, rotation = 90)));
   Modelica.Mechanics.MultiBody.Parts.FixedTranslation rod1(                 r={
         0,wheelDistance/2,0}, animation=animation)
     annotation (Placement(transformation(extent={{-10,-10},{-30,10}})));
@@ -53,13 +50,6 @@ model RollingWheelSetTilting
     useAxisFlange=true,
     animation=animation)
     annotation (Placement(transformation(extent={{40,-10},{60,10}})));
-  Modelica.Mechanics.MultiBody.Joints.Internal.RollingConstraintVerticalWheel
-  rolling1(                             radius=wheelRadius)
-    annotation (Placement(transformation(extent={{-80,-60},{-60,-40}})));
-  Modelica.Mechanics.MultiBody.Joints.Internal.RollingConstraintVerticalWheel
-  rolling2(                             radius=wheelRadius,
-      lateralSlidingConstraint=false)
-    annotation (Placement(transformation(extent={{60,-60},{80,-40}})));
   Modelica.Mechanics.Rotational.Interfaces.Flange_a axis1
   "1-dim. rotational flange that drives the joint"
     annotation (Placement(transformation(extent={{-110,90},{-90,110}})));
@@ -71,33 +61,28 @@ model RollingWheelSetTilting
   Modelica.Mechanics.Rotational.Interfaces.Flange_b support
   "Support of 1D axes" annotation (Placement(transformation(extent={{-10,70},
           {10,90}}),       iconTransformation(extent={{-10,70},{10,90}})));
- Modelica.Mechanics.MultiBody.Joints.Prismatic prismatic(animation = false, s(start = 10))  annotation(
-    Placement(visible = true, transformation(origin = {-22, -44}, extent = {{10, -10}, {-10, 10}}, rotation = 0)));
- Modelica.Mechanics.MultiBody.Joints.Universal universal(animation = false,n_a = {0, 0, 1}, n_b = {0, 1, 0}, phi_a(displayUnit = "deg", start = 0), phi_b(displayUnit = "deg", start = 0.1745329251994329)) annotation(
-    Placement(visible = true, transformation(origin = {10, -26}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
- Modelica.Mechanics.MultiBody.Joints.Revolute revolute3(animation = false, phi(displayUnit = "deg")) annotation(
-    Placement(visible = true, transformation(origin = {0, -62}, extent = {{-10, -10}, {10, 10}}, rotation = 90)));
+ PendulumRobot.RollingConstraintVerticalWheel rollingConstraintVerticalWheel(lateralSlidingConstraint = false, radius = wheelRadius)  annotation(
+    Placement(visible = true, transformation(origin = {-80, -52}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+ PendulumRobot.RollingConstraintVerticalWheel rollingConstraintVerticalWheel1(lateralSlidingConstraint = true, radius = wheelRadius)  annotation(
+    Placement(visible = true, transformation(origin = {80, -52}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
 equation
   revolute1.phi = theta1;
   revolute2.phi = theta2;
   der_theta1 = der(theta1);
+  
   der_theta2 = der(theta2);
   connect(rod1.frame_a, frameMiddle) annotation(
     Line(points = {{-10, 0}, {0, 0}}, color = {95, 95, 95}, thickness = 0.5));
- connect(rod2.frame_a, frameMiddle) annotation(
+  connect(rod2.frame_a, frameMiddle) annotation(
     Line(points = {{10, 0}, {0, 0}}, color = {95, 95, 95}, thickness = 0.5));
   connect(rod1.frame_b, revolute1.frame_a) annotation(
     Line(points = {{-30, 0}, {-40, 0}}, color = {95, 95, 95}, thickness = 0.5));
   connect(revolute1.frame_b, frame1) annotation(
     Line(points = {{-60, 0}, {-80, 0}}, color = {95, 95, 95}, thickness = 0.5));
- connect(revolute2.frame_a, rod2.frame_b) annotation(
+  connect(revolute2.frame_a, rod2.frame_b) annotation(
     Line(points = {{40, 0}, {30, 0}}, color = {95, 95, 95}, thickness = 0.5));
   connect(revolute2.frame_b, frame2) annotation(
     Line(points = {{60, 0}, {80, 0}}, color = {95, 95, 95}, thickness = 0.5));
-  connect(rolling1.frame_a, revolute1.frame_b) annotation(
-    Line(points = {{-70, -48}, {-70, 0}, {-60, 0}}, color = {95, 95, 95}, thickness = 0.5));
-  connect(rolling2.frame_a, revolute2.frame_b) annotation(
-    Line(points = {{70, -48}, {70, 0}, {60, 0}}, color = {95, 95, 95}, thickness = 0.5));
   connect(revolute1.axis, axis1) annotation(
     Line(points = {{-50, 10}, {-50, 100}, {-100, 100}}));
   connect(revolute2.axis, axis2) annotation(
@@ -106,14 +91,10 @@ equation
     Line(points = {{0, 0}, {0, 38}}, color = {95, 95, 95}, thickness = 0.5));
   connect(mounting1D.flange_b, support) annotation(
     Line(points = {{10, 48}, {16, 48}, {16, 80}, {0, 80}}));
- connect(fixed.frame_b, revolute3.frame_a) annotation(
-    Line(points = {{0, -80}, {0, -72}}, color = {95, 95, 95}));
- connect(revolute3.frame_b, prismatic.frame_a) annotation(
-    Line(points = {{0, -52}, {0, -44}, {-12, -44}}, color = {95, 95, 95}));
- connect(prismatic.frame_b, universal.frame_a) annotation(
-    Line(points = {{-32, -44}, {-40, -44}, {-40, -26}, {0, -26}}, color = {95, 95, 95}));
- connect(frameMiddle, universal.frame_b) annotation(
-    Line(points = {{0, 0}, {0, -14}, {30, -14}, {30, -26}, {20, -26}}));
+ connect(rollingConstraintVerticalWheel.frame_a, frame1) annotation(
+    Line(points = {{-80, -50}, {-80, 0}}, color = {95, 95, 95}));
+ connect(rollingConstraintVerticalWheel1.frame_a, frame2) annotation(
+    Line(points = {{80, -50}, {80, 0}}, color = {95, 95, 95}));
   annotation (defaultComponentName="wheelSet",Icon(coordinateSystem(preserveAspectRatio=true, extent={{-100,
             -100},{100,100}}), graphics={Rectangle(fillColor = {175, 175, 175}, fillPattern = FillPattern.Solid, extent = {{-100, -80}, {100, -100}}),
         Text(lineColor = {0, 0, 255}, extent = {{-146, -98}, {154, -138}}, textString = "%name"),
