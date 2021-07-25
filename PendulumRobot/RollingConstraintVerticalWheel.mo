@@ -52,6 +52,10 @@ equation
 // Force and torque balance at the wheel center
   zeros(3) = frame_a.f + Frames.resolve2(frame_a.R, f_wheel_0);
   zeros(3) = frame_a.t + Frames.resolve2(frame_a.R, cross(rContact_0, f_wheel_0));
+  
+  initial equation
+  frame_a.r_0[3] = radius;
+  
   annotation(
     Icon(coordinateSystem(preserveAspectRatio = true, extent = {{-100, -100}, {100, 100}}), graphics = {Rectangle(fillColor = {175, 175, 175}, fillPattern = FillPattern.Solid, extent = {{-100, -60}, {100, -80}}), Text(lineColor = {0, 0, 255}, extent = {{-148, -86}, {152, -126}}, textString = "%name"), Line(points = {{0, -60}, {0, 4}}, pattern = LinePattern.Dot), Line(points = {{-98, -30}, {-16, -30}}), Polygon(fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, points = {{-40, -16}, {-40, -42}, {-6, -30}, {-40, -16}})}),
     Documentation(info = "<html>
